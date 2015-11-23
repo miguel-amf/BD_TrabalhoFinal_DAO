@@ -2,7 +2,7 @@ package bd_final;
 
 import java.sql.*;
 
-// Data Access Object da classe Pessoa referente a tabela Pessoa
+// Data Access Object da classe Pessoa referente aoa tabela Pessoa
 public class PessoaDAO {
 	public PessoaDAO(){
 		@SuppressWarnings("unused")

@@ -3,6 +3,7 @@ package bd_final;
 import java.sql.*;
 import java.util.Properties;
 
+
 class Main {
 
 	public static void main(String[] args) throws SQLException {
@@ -15,6 +16,7 @@ class Main {
 		Statement st = null;
 		ResultSet rs = null;
 		try {
+			
 			conn = DriverManager.getConnection(url, props);
 			st = conn.createStatement();
 		} catch (SQLException e) {
