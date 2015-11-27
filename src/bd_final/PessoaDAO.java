@@ -1,4 +1,5 @@
-package bd_final;
+/*
+ package bd_final;
 
 import java.sql.*;
 
@@ -6,7 +7,7 @@ import java.sql.*;
 public class PessoaDAO {
 	public PessoaDAO(){
 		@SuppressWarnings("unused")
-		Banco banco = new Banco();
+		Banco banco = new Banco);
 	} 
 	
 	// Função que retorna todas as pessoas da tabela Pessoa e todas as suas informações
@@ -93,3 +94,4 @@ public class PessoaDAO {
 
 	}
 }
+*/

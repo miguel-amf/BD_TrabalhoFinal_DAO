@@ -18,6 +18,9 @@ class Main {
 			System.out.println(rs.getString(rs.findColumn("nome")));
 		}
 		
+		InterfaceGrafica interfaceGrafica = new InterfaceGrafica();
+		
+		interfaceGrafica.inicializaInterface();
 		
 		/*fechando a conexao*/
 		rs.close();
