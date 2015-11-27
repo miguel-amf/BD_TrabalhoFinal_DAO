@@ -1,5 +1,7 @@
 package bd_final;
 
+import java.sql.SQLException;
+
 //Classe referente a tabela Pessoa
 public class Pessoa {
 
@@ -104,5 +106,19 @@ public class Pessoa {
 	
 	public String getSexo() {
 		return sexo;
+	}
+	
+	public void insertInDB () throws SQLException{
+		Dao.create("pessoa",
+								sexo +", "+
+								nome +", "+
+								bairro +", "+
+								rua +", "+
+								datanasc +", "+
+								String.valueOf(tipo) +", "+
+								telefone +", "+
+								cpf +", "+
+								String.valueOf(idpessoa)
+								);
 	}
 }

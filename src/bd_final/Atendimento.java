@@ -76,7 +76,7 @@ public class Atendimento extends Paciente {
 	}
 	
 	public void insertInDB () throws SQLException{
-		Dao.create("condicao", 	dataatendimento 	+", "+
+		Dao.create("atendimento", 	dataatendimento 	+", "+
 								String.valueOf(idtipoatendimento) +", "+
 								String.valueOf(idpaciente) +", "+
 								duracaoatendimento +", "+

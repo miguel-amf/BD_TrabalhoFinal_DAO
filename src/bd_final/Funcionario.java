@@ -1,22 +1,9 @@
 package bd_final;
 
+import java.sql.SQLException;
+
 //Classe referente a tabela Funcionário
-public class Funcionario extends Pessoa {
-	public Funcionario(){
-	}
-	
-	//Construtor da classe
-	public Funcionario(int matr,int idpessoa, int iddep, String foto, String crm, 
-			String titulo, String salario, String datainit){
-		this.setMatricula(matr);
-		this.setId(idpessoa);
-		this.setFoto(foto);
-		this.setCrm(crm);
-		this.setTitulo(titulo);
-		this.setSalario(salario);
-		this.setDatainit(datainit);
-		
-	}
+public class Funcionario {
 	
 	int matr;
 	int idpessoa;
@@ -26,6 +13,18 @@ public class Funcionario extends Pessoa {
 	String titulo;
 	String salario;
 	String datainit;
+	
+	//Construtor da classe
+	public Funcionario(int matr,int idpessoa, int iddep, String foto, String crm, 
+			String titulo, String salario, String datainit){
+		this.setMatricula(matr);
+		this.setFoto(foto);
+		this.setCrm(crm);
+		this.setTitulo(titulo);
+		this.setSalario(salario);
+		this.setDatainit(datainit);
+		
+	}
 	
 	public String getTitulo(){
 		return titulo;
@@ -74,4 +73,28 @@ public class Funcionario extends Pessoa {
 	public void setMatricula(int matr2) {
 		matr = matr2;
 	}
+	
+	/*
+	 * 	int matr;
+	int idpessoa;
+	int iddep;
+	String foto;
+	String crm;
+	String titulo;
+	String salario;
+	String datainit;
+	 */
+	
+	public void insertInDB () throws SQLException{
+		Dao.create("funcionario", 	
+								datainit 	+", "+
+								salario +", "+
+								titulo +", "+
+								String.valueOf(iddep) +", "+
+								String.valueOf(idpessoa) +", "+
+								foto +", "+
+								crm);
+	}
+	
+	
 }
