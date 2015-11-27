@@ -3,26 +3,24 @@ package bd_final;
 import java.sql.*;
 import java.util.Properties;
 
-class Crud {
+class Dao {
 	//variaveis internas
 	
 	static private Connection conn;
 	static private Statement st = null;
 	
-	static private String url = "jdbc:postgresql://localhost:5432/TrabalhoBD";
+	static private String url = "jdbc:postgresql://localhost:5432/TrabalhoBDv6";
 	
 	/*realiza o login*/
-	public static void login(String user, String password) {
+	public static void login(String user, String password) throws SQLException{
 		Properties props = new Properties();
 		props.setProperty("user", user);
 		props.setProperty("password", password);
 		
-		try {
-			conn = DriverManager.getConnection(url, props);
-			st = conn.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
+		conn = DriverManager.getConnection(url, props);
+		st = conn.createStatement();
+
 		
 	}
 	

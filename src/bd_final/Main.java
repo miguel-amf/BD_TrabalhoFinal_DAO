@@ -9,10 +9,10 @@ class Main {
 		ResultSet rs = null;
 		
 		/*faz o login*/
-		Crud.login("postgres", "123qwe");
+		Dao.login("postgres", "123qwe");
 		
 		
-		rs = Crud.read("pessoa", "*");
+		rs = Dao.read("pessoa", "*");
 		
 		while(rs.next()) {
 			System.out.println(rs.getString(rs.findColumn("nome")));
@@ -21,9 +21,8 @@ class Main {
 		
 		/*fechando a conexao*/
 		rs.close();
-		Crud.close();
+		Dao.close();
 		
 
 	}
-
 }
