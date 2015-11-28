@@ -12,15 +12,20 @@ class Dao {
 	static private String url = "jdbc:postgresql://localhost:5432/TrabalhoBDv6";
 	
 	/*realiza o login*/
-	public static void login(String user, String password) throws SQLException{
+	public static boolean login(String user, String password){
 		Properties props = new Properties();
 		props.setProperty("user", user);
 		props.setProperty("password", password);
 		
 
-		conn = DriverManager.getConnection(url, props);
-		st = conn.createStatement();
+		try {
+			conn = DriverManager.getConnection(url, props);
+			st = conn.createStatement();
+		} catch (SQLException e) {
+			return false;
+		}
 
+		return true;
 		
 	}
 	
