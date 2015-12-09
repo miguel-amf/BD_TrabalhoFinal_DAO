@@ -1,6 +1,11 @@
 package bd_final;
 
+import java.awt.Font;
 import java.sql.*;
+
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 class Main {
 
@@ -22,6 +27,28 @@ class Main {
 		}
 		
 		*/
+		
+		
+		try {
+            // Set cross-platform Java L&F (also called "Metal")
+			UIManager.setLookAndFeel(
+					UIManager.getSystemLookAndFeelClassName());
+			
+	    } 
+	    catch (UnsupportedLookAndFeelException e) {
+	       // handle exception
+	    }
+	    catch (ClassNotFoundException e) {
+	       // handle exception
+	    }
+	    catch (InstantiationException e) {
+	       // handle exception
+	    }
+	    catch (IllegalAccessException e) {
+	       // handle exception
+	    }
+		
+		
 		
 		InterfaceGrafica interfaceGrafica = new InterfaceGrafica();
 		

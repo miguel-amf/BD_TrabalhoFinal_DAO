@@ -11,6 +11,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 
 public class PessoaPane {
@@ -36,7 +37,11 @@ public class PessoaPane {
 	
 	JButton botaoCadastro;
 	
+	String[] listaSangue = {"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"};
+	
 	JComboBox tipoSangue;
+	
+
 
 	public JPanel create() {
 		JPanel panePessoa = new JPanel(new GridBagLayout());
@@ -48,7 +53,7 @@ public class PessoaPane {
 		
 		try {
 			maskCpf = new MaskFormatter("###.###.###-##");
-			maskTel = new MaskFormatter("(##)####-####");
+			maskTel = new MaskFormatter("(##)########");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -79,14 +84,19 @@ public class PessoaPane {
 		
 		botaoCadastro = new JButton("Cadastrar");
 		
-		tipoSangue = new JComboBox();
-		
+		/*Configs dos componentes*/
+		tipoSangue = new JComboBox<String>(listaSangue);
+		labelSexF.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelSexM.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
+		c.ipady = 10;
+		c.ipadx = 20;
+		
 		
 		/*Desenhando os Componentes*/
 		

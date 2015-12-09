@@ -9,7 +9,7 @@ class Dao {
 	static private Connection conn;
 	static private Statement st = null;
 	
-	static private String url = "jdbc:postgresql://localhost:5432/TrabalhoBDv6";
+	static private String url = "jdbc:postgresql://localhost:5432/TrabalhoBDv9";
 	
 	/*realiza o login*/
 	public static boolean login(String user, String password){
@@ -70,6 +70,10 @@ class Dao {
 	/*Delete*/
 	public static void delete(String table, String cond) throws SQLException{
 		st.executeUpdate("DELETE FROM " + table + " WHERE " + cond);
+	}
+	
+	public static void exeFuncao (String func) throws SQLException {
+		st.execute("SELECT " + func);
 	}
 	
 	

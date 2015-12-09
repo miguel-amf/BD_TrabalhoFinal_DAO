@@ -42,7 +42,7 @@ public class LoginPane {
 		
 		/*Configurando componentes*/
 		
-		
+		textUsuario.setFont(textUsuario.getFont().deriveFont(textUsuario.getFont().getSize() * 10));
 		
 		
 		/*desenhando componentes*/
