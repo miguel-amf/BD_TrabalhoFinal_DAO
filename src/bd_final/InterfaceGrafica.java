@@ -262,6 +262,31 @@ class InterfaceGrafica implements ActionListener {
 
 		}
 		
+		if(e.getSource() == aUDPane.botaoDelete) {
+			int dialogResult = JOptionPane.showConfirmDialog(frame, "Gostaria de remover o atendimento " + aUDPane.fieldIdA.getText() + "?", "PostgreSQL", JOptionPane.YES_NO_OPTION);
+			if(dialogResult == 0) {
+			  try {
+				Dao.delete("atendimento", "idatendimento = " + aUDPane.fieldIdA.getText());
+				JOptionPane.showMessageDialog(frame, "Removido com sucesso", "PostgreSQL", JOptionPane.OK_OPTION);
+				
+				aUDPane.fieldId.setText("");
+				aUDPane.fieldData.setText("");
+				aUDPane.fieldHora.setText("");
+				aUDPane.fieldDuracao.setText("");
+				aUDPane.fieldResultado.setText("");
+				aUDPane.tipoAtendimento.setSelectedIndex(0);
+				aUDPane.fieldIdA.setText("");
+			  } catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			  }
+			} 
+		}
+		
+		if(e.getSource() == aUDPane.botaoUpdate) {
+			
+		}
+		
 		
 		
 	}/*Fim listener*/
