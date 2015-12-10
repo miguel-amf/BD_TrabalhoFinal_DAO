@@ -68,7 +68,7 @@ class Dao {
 	/*Update*/
 	public static void update(String table, String column, String value, String cond) throws SQLException{
 		
-		st.executeUpdate("UPDATE " + table + " SET " + column + " = " + value + " WHERE " + cond);
+		st.executeUpdate("UPDATE " + table + " SET (" + column + ") = (" + value + ") WHERE " + cond);
 	}
 	
 	/*Delete*/

@@ -277,14 +277,22 @@ class InterfaceGrafica implements ActionListener {
 				aUDPane.tipoAtendimento.setSelectedIndex(0);
 				aUDPane.fieldIdA.setText("");
 			  } catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			  }
-			} 
+			}
 		}
 		
 		if(e.getSource() == aUDPane.botaoUpdate) {
-			
+			try {
+				Dao.update("atendimento", "dataatendimento", aUDPane.fieldData.getText() + " " + aUDPane.fieldHora.getText(), "idatendimento = " + aUDPane.fieldIdA);
+				Dao.update("atendimento", "tipoatendimento", String.valueOf(aUDPane.tipoAtendimento.getSelectedIndex()), "idatendimento = " + aUDPane.fieldIdA);
+				Dao.update("atendimento", "idpaciente", aUDPane.fieldId.getText(), "idatendimento = " + aUDPane.fieldIdA);
+				Dao.update("atendimento", "duracaoatendimento", aUDPane.fieldDuracao.getText(), "idatendimento = " + aUDPane.fieldIdA);
+				Dao.update("atendimento", "resultado", aUDPane.fieldResultado.getText(), "idatendimento = " + aUDPane.fieldIdA);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
 		
