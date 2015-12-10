@@ -19,6 +19,7 @@ class InterfaceGrafica implements ActionListener {
 	LoginPane loginPane;
 	BuscaPessoa buscaPessoa;
 	BuscaAtendimento buscaAtendimento;
+	ACreatePane	aCreatePane;
 	
 	public void inicializaInterface() {
 		
@@ -203,6 +204,37 @@ class InterfaceGrafica implements ActionListener {
 			}
 		}
 		
+		
+		if(e.getSource() == aCreatePane.botaoCriar) {
+
+			/*Constroi a querry*/
+			
+			String value = "'";
+			
+			value += aCreatePane.fieldData.getText() + " " + aCreatePane.fieldHora.getText() + "', ";
+			
+			value += aCreatePane.tipoAtendimento.getSelectedItem().toString().substring(0,1) + ", ";
+			
+			value += aCreatePane.fieldId.getText() + ", ";
+			
+			value += "'00:00:00', 'Sem Resultado', 932";
+			
+			
+			
+			boolean deuBao = true;
+			try {
+				Dao.create("atendimento(dataatendimento, idtipoatendimento, idpaciente, duracaoatendimento,resultado,umatendimento)", value);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				deuBao = false;
+				JOptionPane.showMessageDialog(frame, "Erro ao inserir atendimento :(", "PostgreSQL", JOptionPane.ERROR_MESSAGE);
+				
+			}
+			if (deuBao) {
+				JOptionPane.showMessageDialog(frame, "Atendimento inserido com sucesso!", "PostgreSQL", JOptionPane.INFORMATION_MESSAGE);
+			}	
+			
+		}
 	}/*Fim listener*/
 
 
@@ -215,6 +247,12 @@ class InterfaceGrafica implements ActionListener {
 		pessoaPane = new PessoaPane();
 		pane.addTab("Cadastro", pessoaPane.create());
 		pessoaPane.botaoCadastro.addActionListener(this);
+		
+		aCreatePane = new ACreatePane();
+		pane.addTab("Criar Atendimento", aCreatePane.create());
+		aCreatePane.botaoCriar.addActionListener(this);
+		
+		
 		
 		return pane;
 		
