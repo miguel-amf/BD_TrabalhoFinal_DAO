@@ -55,9 +55,10 @@ class Dao {
 	}
 	
 	/*Read*/
-	public static ResultSet read(String table, String args) throws SQLException{
-		
-		return st.executeQuery("SELECT " + args + " FROM " + table);
+	public static ResultSet retrieve(String table, String args, String cond) throws SQLException{
+		//Dao.retrieve("pessoa", "(idpessoa, nome)", "nome LIKE '%" + buscaPessoa.fieldPessoa.getText() + "%'");
+		System.out.println("SELECT " + args + " FROM " + table + " WHERE " + cond);
+		return st.executeQuery("SELECT " + args + " FROM " + table + " WHERE " + cond);
 		
 	}
 	

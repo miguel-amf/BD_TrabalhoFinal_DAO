@@ -3,6 +3,7 @@ package bd_final;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Enumeration;
 
@@ -17,6 +18,7 @@ class InterfaceGrafica implements ActionListener {
 	PessoaPane pessoaPane;
 	LoginPane loginPane;
 	BuscaPessoa buscaPessoa;
+	BuscaAtendimento buscaAtendimento;
 	
 	public void inicializaInterface() {
 		
@@ -104,7 +106,7 @@ class InterfaceGrafica implements ActionListener {
 					frameBusca = new JFrame("Busca");
 					frameBusca.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					
-					frameBusca.setSize(400, 600);
+					frameBusca.setSize(450, 600);
 					frameBusca.setResizable(false);
 					frameBusca.setLocationRelativeTo(frame);
 					
@@ -156,11 +158,52 @@ class InterfaceGrafica implements ActionListener {
 			}
 			if (deuBao) {
 				JOptionPane.showMessageDialog(frame, "Pessoa inserida com sucesso!", "PostgreSQL", JOptionPane.INFORMATION_MESSAGE);
+			}	
+		}
+		
+		
+		
+		if(e.getSource() == buscaPessoa.botaoBusca) {
+			buscaPessoa.textResultado.setText("");
+			ResultSet resultado = null;
+			try {
+				/*Cria o resultset para fazer treitas*/
+				resultado = Dao.retrieve("pessoa", "*", "nome LIKE '%" + buscaPessoa.fieldPessoa.getText() + "%'");
+
+				buscaPessoa.textResultado.append("ID\tNOME\n");
+				
+				while(resultado.next()) {
+					buscaPessoa.textResultado.append(resultado.getString(resultado.findColumn("idpessoa")) + "\t" + resultado.getString(resultado.findColumn("nome")) + "\n");
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
 			}
 			
 			
 		}
-	}
+		
+		if(e.getSource() == buscaAtendimento.botaoBusca) {
+			buscaAtendimento.textResultado.setText("");
+			ResultSet resultado = null;
+			try {
+				/*Cria o resultset para fazer treitas*/
+				resultado = Dao.retrieve("atendimento", "*", "idpaciente = " + buscaAtendimento.fieldId.getText());
+
+
+				while(resultado.next()) {
+					buscaAtendimento.textResultado.append("################################\n");
+					//buscaPessoa.textResultado.append("Nome: " + Dao.retrieve("pessoa", "*", "idpessoa = " + resultado.getString(4)).getString(2) + "\n");
+					buscaAtendimento.textResultado.append("id atendimento: " + resultado.getString(1));
+					buscaAtendimento.textResultado.append(" data: " + resultado.getString(2) + "\n");
+					buscaAtendimento.textResultado.append("Resultado: \n" + resultado.getString(6) + "\n");
+					buscaAtendimento.textResultado.append("################################\n");
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+	}/*Fim listener*/
 
 
 
@@ -184,6 +227,9 @@ class InterfaceGrafica implements ActionListener {
 		buscaPessoa = new BuscaPessoa();
 		pane.addTab("Pessoa", buscaPessoa.create());
 		buscaPessoa.botaoBusca.addActionListener(this);
+		buscaAtendimento = new BuscaAtendimento();
+		pane.addTab("Atendimento", buscaAtendimento.create());
+		buscaAtendimento.botaoBusca.addActionListener(this);
 		
 		return pane;
 	}

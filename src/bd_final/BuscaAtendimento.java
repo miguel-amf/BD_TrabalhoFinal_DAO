@@ -11,11 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class BuscaPessoa {
+public class BuscaAtendimento {
 	JLabel labelPessoa;
 	JLabel labelResultado;
 	
-	JTextField fieldPessoa;
+	JTextField fieldId;
 	
 	JTextArea textResultado;
 	
@@ -29,10 +29,10 @@ public class BuscaPessoa {
 		
 		
 		/*inicializa os componentes*/
-		labelPessoa = new JLabel("Nome:");
+		labelPessoa = new JLabel("ID pessoa:");
 		labelResultado = new JLabel("Resultado:");
 		
-		fieldPessoa = new JTextField();
+		fieldId = new JTextField();
 		
 		textResultado = new JTextArea();
 		
@@ -62,8 +62,7 @@ public class BuscaPessoa {
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 1;
-		c.ipadx = 230;
-		paneBuscaP.add(fieldPessoa, c);
+		paneBuscaP.add(fieldId, c);
 		
 		c.gridx = 1;
 		c.gridy = 1;
