@@ -3,6 +3,7 @@ package bd_final;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Enumeration;
 
@@ -17,6 +18,9 @@ class InterfaceGrafica implements ActionListener {
 	PessoaPane pessoaPane;
 	LoginPane loginPane;
 	BuscaPessoa buscaPessoa;
+	BuscaAtendimento buscaAtendimento;
+	ACreatePane	aCreatePane;
+	AUDPane aUDPane;
 	
 	public void inicializaInterface() {
 		
@@ -104,7 +108,7 @@ class InterfaceGrafica implements ActionListener {
 					frameBusca = new JFrame("Busca");
 					frameBusca.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					
-					frameBusca.setSize(400, 600);
+					frameBusca.setSize(450, 600);
 					frameBusca.setResizable(false);
 					frameBusca.setLocationRelativeTo(frame);
 					
@@ -156,11 +160,136 @@ class InterfaceGrafica implements ActionListener {
 			}
 			if (deuBao) {
 				JOptionPane.showMessageDialog(frame, "Pessoa inserida com sucesso!", "PostgreSQL", JOptionPane.INFORMATION_MESSAGE);
+			}	
+		}
+		
+		
+		
+		if(e.getSource() == buscaPessoa.botaoBusca) {
+			buscaPessoa.textResultado.setText("");
+			ResultSet resultado = null;
+			try {
+				/*Cria o resultset para fazer treitas*/
+				resultado = Dao.retrieve("pessoa", "*", "nome LIKE '%" + buscaPessoa.fieldPessoa.getText() + "%'");
+
+				buscaPessoa.textResultado.append("ID\tNOME\n");
+				
+				while(resultado.next()) {
+					buscaPessoa.textResultado.append(resultado.getString(resultado.findColumn("idpessoa")) + "\t" + resultado.getString(resultado.findColumn("nome")) + "\n");
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
 			}
 			
 			
 		}
-	}
+		
+		if(e.getSource() == buscaAtendimento.botaoBusca) {
+			buscaAtendimento.textResultado.setText("");
+			ResultSet resultado = null;
+			try {
+				/*Cria o resultset para fazer treitas*/
+				resultado = Dao.retrieve("atendimento", "*", "idpaciente = " + buscaAtendimento.fieldId.getText());
+
+
+				while(resultado.next()) {
+					buscaAtendimento.textResultado.append("################################\n");
+					//buscaPessoa.textResultado.append("Nome: " + Dao.retrieve("pessoa", "*", "idpessoa = " + resultado.getString(4)).getString(2) + "\n");
+					buscaAtendimento.textResultado.append("id atendimento: " + resultado.getString(1));
+					buscaAtendimento.textResultado.append(" data: " + resultado.getString(2) + "\n");
+					buscaAtendimento.textResultado.append("Resultado: \n" + resultado.getString(6) + "\n");
+					buscaAtendimento.textResultado.append("################################\n");
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		
+		if(e.getSource() == aCreatePane.botaoCriar) {
+
+			/*Constroi a querry*/
+			
+			String value = "'";
+			
+			value += aCreatePane.fieldData.getText() + " " + aCreatePane.fieldHora.getText() + "', ";
+			
+			value += aCreatePane.tipoAtendimento.getSelectedItem().toString().substring(0, 1) + ", ";
+			
+			value += aCreatePane.fieldId.getText() + ", ";
+			
+			value += "'00:00:00', 'Sem Resultado', 932";
+			
+			
+			
+			boolean deuBao = true;
+			try {
+				Dao.create("atendimento(dataatendimento, idtipoatendimento, idpaciente, duracaoatendimento,resultado,umatendimento)", value);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				deuBao = false;
+				JOptionPane.showMessageDialog(frame, "Erro ao inserir atendimento :(", "PostgreSQL", JOptionPane.ERROR_MESSAGE);
+				
+			}
+			if (deuBao) {
+				JOptionPane.showMessageDialog(frame, "Atendimento inserido com sucesso!", "PostgreSQL", JOptionPane.INFORMATION_MESSAGE);
+			}	
+			
+		}
+		
+		
+		if(e.getSource() == aUDPane.botaoPesquisar) {
+			ResultSet rs = null;
+			
+			try {
+				rs = Dao.retrieve("atendimento", "*", "idatendimento = " + aUDPane.fieldIdA.getText());
+				
+				if(rs.next()) {
+					aUDPane.fieldId.setText(rs.getString(4));
+					aUDPane.fieldData.setText(rs.getString(2).substring(0, 10));
+					aUDPane.fieldHora.setText(rs.getString(2).substring(11));
+					aUDPane.fieldDuracao.setText(rs.getString(5));
+					aUDPane.fieldResultado.setText(rs.getString(6));
+					aUDPane.tipoAtendimento.setSelectedIndex(Integer.parseInt(rs.getString(3)) - 1);
+					
+				} else {
+					JOptionPane.showMessageDialog(frame, "Atendimento não encontrado", "PostgreSQL", JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			
+
+		}
+		
+		if(e.getSource() == aUDPane.botaoDelete) {
+			int dialogResult = JOptionPane.showConfirmDialog(frame, "Gostaria de remover o atendimento " + aUDPane.fieldIdA.getText() + "?", "PostgreSQL", JOptionPane.YES_NO_OPTION);
+			if(dialogResult == 0) {
+			  try {
+				Dao.delete("atendimento", "idatendimento = " + aUDPane.fieldIdA.getText());
+				JOptionPane.showMessageDialog(frame, "Removido com sucesso", "PostgreSQL", JOptionPane.OK_OPTION);
+				
+				aUDPane.fieldId.setText("");
+				aUDPane.fieldData.setText("");
+				aUDPane.fieldHora.setText("");
+				aUDPane.fieldDuracao.setText("");
+				aUDPane.fieldResultado.setText("");
+				aUDPane.tipoAtendimento.setSelectedIndex(0);
+				aUDPane.fieldIdA.setText("");
+			  } catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			  }
+			} 
+		}
+		
+		if(e.getSource() == aUDPane.botaoUpdate) {
+			
+		}
+		
+		
+		
+	}/*Fim listener*/
 
 
 
@@ -173,6 +302,16 @@ class InterfaceGrafica implements ActionListener {
 		pane.addTab("Cadastro", pessoaPane.create());
 		pessoaPane.botaoCadastro.addActionListener(this);
 		
+		aCreatePane = new ACreatePane();
+		pane.addTab("Criar Atendimento", aCreatePane.create());
+		aCreatePane.botaoCriar.addActionListener(this);
+		
+		aUDPane = new AUDPane();
+		pane.addTab("Atualizar/Remover", aUDPane.create());
+		aUDPane.botaoDelete.addActionListener(this);
+		aUDPane.botaoUpdate.addActionListener(this);
+		aUDPane.botaoPesquisar.addActionListener(this);
+		
 		return pane;
 		
 	}
@@ -184,6 +323,9 @@ class InterfaceGrafica implements ActionListener {
 		buscaPessoa = new BuscaPessoa();
 		pane.addTab("Pessoa", buscaPessoa.create());
 		buscaPessoa.botaoBusca.addActionListener(this);
+		buscaAtendimento = new BuscaAtendimento();
+		pane.addTab("Atendimento", buscaAtendimento.create());
+		buscaAtendimento.botaoBusca.addActionListener(this);
 		
 		return pane;
 	}

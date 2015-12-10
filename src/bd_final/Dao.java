@@ -45,8 +45,12 @@ class Dao {
 	/*Create*/
 	public static void create(String table, String values) throws SQLException{
 		int qtdModificados = 0;
+		
+		System.out.println("INSERT INTO " + table +  " VALUES (" + values + ")");
 
 		qtdModificados = st.executeUpdate("INSERT INTO " + table +  " VALUES (" + values + ")");
+		
+
 		
 		/*verifica se foi feita alguma alteracao*/
 		if (qtdModificados == 0) {
@@ -55,9 +59,9 @@ class Dao {
 	}
 	
 	/*Read*/
-	public static ResultSet read(String table, String args) throws SQLException{
-		
-		return st.executeQuery("SELECT " + args + " FROM " + table);
+	public static ResultSet retrieve(String table, String args, String cond) throws SQLException{
+		System.out.println("SELECT " + args + " FROM " + table + " WHERE " + cond);
+		return st.executeQuery("SELECT " + args + " FROM " + table + " WHERE " + cond);
 		
 	}
 	
