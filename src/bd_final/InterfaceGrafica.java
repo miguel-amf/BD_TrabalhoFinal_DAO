@@ -284,11 +284,12 @@ class InterfaceGrafica implements ActionListener {
 		
 		if(e.getSource() == aUDPane.botaoUpdate) {
 			try {
-				Dao.update("atendimento", "dataatendimento", aUDPane.fieldData.getText() + " " + aUDPane.fieldHora.getText(), "idatendimento = " + aUDPane.fieldIdA);
-				Dao.update("atendimento", "tipoatendimento", String.valueOf(aUDPane.tipoAtendimento.getSelectedIndex()), "idatendimento = " + aUDPane.fieldIdA);
-				Dao.update("atendimento", "idpaciente", aUDPane.fieldId.getText(), "idatendimento = " + aUDPane.fieldIdA);
-				Dao.update("atendimento", "duracaoatendimento", aUDPane.fieldDuracao.getText(), "idatendimento = " + aUDPane.fieldIdA);
-				Dao.update("atendimento", "resultado", aUDPane.fieldResultado.getText(), "idatendimento = " + aUDPane.fieldIdA);
+				Dao.update("atendimento", "dataatendimento", "'" + aUDPane.fieldData.getText() + " " + aUDPane.fieldHora.getText() + "'", "idatendimento = " + aUDPane.fieldIdA.getText());
+				Dao.update("atendimento", "idtipoatendimento", String.valueOf(aUDPane.tipoAtendimento.getSelectedIndex() + 1), "idatendimento = " + aUDPane.fieldIdA.getText());
+				Dao.update("atendimento", "idpaciente", "'" + aUDPane.fieldId.getText() + "'", "idatendimento = " + aUDPane.fieldIdA.getText());
+				Dao.update("atendimento", "duracaoatendimento", "'" + aUDPane.fieldDuracao.getText() + "'", "idatendimento = " + aUDPane.fieldIdA.getText());
+				Dao.update("atendimento", "resultado", "'" + aUDPane.fieldResultado.getText() + "'", "idatendimento = " + aUDPane.fieldIdA.getText());
+				JOptionPane.showMessageDialog(frame, "Atualizado com sucesso!", "PostgreSQL", JOptionPane.PLAIN_MESSAGE);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
