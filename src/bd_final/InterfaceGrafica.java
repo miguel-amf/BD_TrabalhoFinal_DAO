@@ -11,11 +11,12 @@ import javax.swing.plaf.FontUIResource;
 
 class InterfaceGrafica implements ActionListener {
 	
-	JFrame frame;
+	JFrame frame, frameBusca;
 	
 	
 	PessoaPane pessoaPane;
 	LoginPane loginPane;
+	BuscaPessoa buscaPessoa;
 	
 	public void inicializaInterface() {
 		
@@ -23,7 +24,7 @@ class InterfaceGrafica implements ActionListener {
 		setUIFont(new FontUIResource(new Font("Verdana", 0, 16)));
 		
 		
-		/*Cria o frame*/
+		/*Cria o frame principal*/
 		frame = new JFrame("UTI Neonatal Vicente Pires");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -47,8 +48,6 @@ class InterfaceGrafica implements ActionListener {
 		
 		/*inicializa o frame*/
 		frame.setContentPane(curPane);
-		
-		
 		frame.setVisible(true);
 		
 		
@@ -99,6 +98,18 @@ class InterfaceGrafica implements ActionListener {
 					frame.setSize(630, 390);
 					frame.setLocationRelativeTo(null);
 					frame.revalidate();
+					
+					
+					/*Cria o frame de busca*/
+					frameBusca = new JFrame("Busca");
+					frameBusca.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					
+					frameBusca.setSize(400, 600);
+					frameBusca.setResizable(false);
+					frameBusca.setLocationRelativeTo(frame);
+					
+					frameBusca.setContentPane(tabBusca());
+					frameBusca.setVisible(true);
 					
 					
 				}	
@@ -164,6 +175,17 @@ class InterfaceGrafica implements ActionListener {
 		
 		return pane;
 		
+	}
+	
+	private JComponent tabBusca() {
+		JTabbedPane pane = new JTabbedPane();
+		
+		/*insere painel buscaPessoa*/
+		buscaPessoa = new BuscaPessoa();
+		pane.addTab("Pessoa", buscaPessoa.create());
+		buscaPessoa.botaoBusca.addActionListener(this);
+		
+		return pane;
 	}
 	
     public static void setUIFont(FontUIResource f) {
