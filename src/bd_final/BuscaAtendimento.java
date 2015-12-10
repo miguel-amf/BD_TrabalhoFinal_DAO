@@ -8,6 +8,7 @@ import java.text.ParseException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -16,6 +17,8 @@ public class BuscaAtendimento {
 	JLabel labelResultado;
 	
 	JTextField fieldId;
+	
+	JScrollPane scroll;
 	
 	JTextArea textResultado;
 	
@@ -41,6 +44,8 @@ public class BuscaAtendimento {
 		/*configura os componentes*/
 		
 		textResultado.setEditable(false);
+		
+		scroll = new JScrollPane(textResultado);
 		
 		
 		
@@ -74,7 +79,7 @@ public class BuscaAtendimento {
 		c.gridy = 2;
 		c.gridwidth = 2;
 		c.ipady = 400;
-		paneBuscaP.add(textResultado, c);
+		paneBuscaP.add(scroll, c);
 		
 		
 		return paneBuscaP;

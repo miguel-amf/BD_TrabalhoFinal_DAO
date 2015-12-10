@@ -20,6 +20,7 @@ class InterfaceGrafica implements ActionListener {
 	BuscaPessoa buscaPessoa;
 	BuscaAtendimento buscaAtendimento;
 	ACreatePane	aCreatePane;
+	AUDPane aUDPane;
 	
 	public void inicializaInterface() {
 		
@@ -213,7 +214,7 @@ class InterfaceGrafica implements ActionListener {
 			
 			value += aCreatePane.fieldData.getText() + " " + aCreatePane.fieldHora.getText() + "', ";
 			
-			value += aCreatePane.tipoAtendimento.getSelectedItem().toString().substring(0,1) + ", ";
+			value += aCreatePane.tipoAtendimento.getSelectedItem().toString().substring(0, 1) + ", ";
 			
 			value += aCreatePane.fieldId.getText() + ", ";
 			
@@ -235,6 +236,34 @@ class InterfaceGrafica implements ActionListener {
 			}	
 			
 		}
+		
+		
+		if(e.getSource() == aUDPane.botaoPesquisar) {
+			ResultSet rs = null;
+			
+			try {
+				rs = Dao.retrieve("atendimento", "*", "idatendimento = " + aUDPane.fieldIdA.getText());
+				
+				if(rs.next()) {
+					aUDPane.fieldId.setText(rs.getString(4));
+					aUDPane.fieldData.setText(rs.getString(2).substring(0, 10));
+					aUDPane.fieldHora.setText(rs.getString(2).substring(11));
+					aUDPane.fieldDuracao.setText(rs.getString(5));
+					aUDPane.fieldResultado.setText(rs.getString(6));
+					aUDPane.tipoAtendimento.setSelectedIndex(Integer.parseInt(rs.getString(3)) - 1);
+					
+				} else {
+					JOptionPane.showMessageDialog(frame, "Atendimento não encontrado", "PostgreSQL", JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			
+
+		}
+		
+		
+		
 	}/*Fim listener*/
 
 
@@ -252,7 +281,11 @@ class InterfaceGrafica implements ActionListener {
 		pane.addTab("Criar Atendimento", aCreatePane.create());
 		aCreatePane.botaoCriar.addActionListener(this);
 		
-		
+		aUDPane = new AUDPane();
+		pane.addTab("Atualizar/Remover", aUDPane.create());
+		aUDPane.botaoDelete.addActionListener(this);
+		aUDPane.botaoUpdate.addActionListener(this);
+		aUDPane.botaoPesquisar.addActionListener(this);
 		
 		return pane;
 		

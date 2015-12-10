@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -20,6 +21,7 @@ public class BuscaPessoa {
 	
 	JButton botaoBusca;
 	
+	JScrollPane scroll;
 
 	
 	public JPanel create(){
@@ -41,7 +43,7 @@ public class BuscaPessoa {
 		
 		textResultado.setEditable(false);
 		
-		
+		scroll = new JScrollPane(textResultado);
 		
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -74,7 +76,7 @@ public class BuscaPessoa {
 		c.gridy = 2;
 		c.gridwidth = 2;
 		c.ipady = 400;
-		paneBuscaP.add(textResultado, c);
+		paneBuscaP.add(scroll, c);
 		
 		
 		return paneBuscaP;
